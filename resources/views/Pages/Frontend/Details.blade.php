@@ -1,0 +1,12 @@
+@extends('layout.app')
+@section('title','home-page')
+@section('breadcrumb-title','Details About the Car')
+@section('breadcrumb-message','We d love to hear from you! Discover the Details of the Car!')
+@section('url','/homePage')
+@section('breadcrumb-page','Details')
+@section('content')
+@include('Component.frontend.Navvar')
+@include('Component.frontend.BreadCump')
+@include('Component.frontend.Details')
+@include('Component.frontend.footer')
+@endsection

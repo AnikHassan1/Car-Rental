@@ -1,0 +1,11 @@
+@extends('layout.app')
+@section('title','Contact-page')
+@section('breadcrumb-title','Get in Touch With Us')
+@section('breadcrumb-message','We d love to hear from you! Fill out the form or reach out via our contact methods.')
+@section('url','/homePage')
+@section('content')
+@include('Component.frontend.Navvar')
+@include('Component.frontend.BreadCump')
+@include('Component.frontend.Contact')
+@include('Component.frontend.footer')
+@endsection
