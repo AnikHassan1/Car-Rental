@@ -2,10 +2,48 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Car;
+use App\Models\User;
+use App\Models\rentals;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class RentalController extends Controller
 {
-    //
+    // function rentalAdmin()
+    // {
+    //     $rent = rentals::with('car', 'user')->get();
+    //    return $rent;
+    // }
+    // function singleRental(Request $request){
+    //     $user_id = $request->input('user_id');
+    //     $car_id = $request->input('car_id');
+    //     $start_date = $request->input('start_date');
+    //     $end_date = $request->input('end_date');
+
+    //     $user =User::where('id',$user_id)->get();
+    //     $car =Car::where('id', $car_id)->get();
+    //     $ran =rentals::where('car_id', $car_id)->where('user_id',$user_id)->get();
+
+    //     return response()->json([
+    //         "user"=>$user,
+    //         "car"=>$car,
+    //         "ran"=>$ran
+    //     ],200);
+    // }
+
+    function RentalsPage()
+    {
+        $rentals = rentals::with('car', 'user')->get();
+       // return $rentals;
+        return view('Pages.Admin.Rentals' , compact('rentals'));
+    }
+    function DeleteRental(Request $request){
+        $id =$request->input('id');
+        rentals::where('id',$id)->delete();
+        return response()->json([
+               "status"=>"success",
+               "message"=>"Delete Rental Data"
+        ]);
+    }
 }

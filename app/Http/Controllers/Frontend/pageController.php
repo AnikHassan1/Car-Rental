@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use Exception;
+use App\Models\rentals;
 use App\Helper\JWTToken;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -76,10 +77,7 @@ class pageController extends Controller
     {
         return view('Pages.Admin.Car');
     }
-    function RentalsPage()
-    {
-        return view('Pages.Admin.Car');
-    }
+   
     function ContactPage()
     {
         return view('Pages.Frontend.Contact');

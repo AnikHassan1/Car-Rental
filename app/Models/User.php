@@ -22,6 +22,20 @@ class User extends Authenticatable
     //     'password',
     // ];
     protected $guarded = ['id'];
+
+    public function isAdmin() {
+        return $this->role === 'admin';
+    }
+
+    // Check if user is a customer
+    public function isCustomer() {
+        return $this->role === 'customer';
+    }
+
+    // Define relationship: User can have many rentals
+    public function rentals() {
+        return $this->hasMany(rentals::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

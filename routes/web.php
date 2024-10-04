@@ -28,7 +28,7 @@ Route::get('/details/{id}',[pageController::class,'DetailsPage']);
 Route::get('/customerPages',[pageController::class,'CustomerPages']);
 Route::get('/dashboard',[pageController::class,'Dashboard']);
 Route::get('/carPage',[pageController::class,'CarPage']);
-Route::get('/rentalsPages',[pageController::class,'RentalsPage']);
+Route::get('/rentalsPages',[RentalController::class,'RentalsPage']);
 Route::get('/contact',[pageController::class,'ContactPage']);
 Route::get('/rentals',[pageController::class,'RentalPage']);
 Route::get('/about',[pageController::class,'AboutPage']);
@@ -47,3 +47,5 @@ Route::get('/Rentview/{id}',[pageController::class,'RentalPages']);
 Route::post('/rentConfirm',[RenFronContoller::class,'RentalPages']);
 //Bill
 Route::get('pay',[pageController::class,'billPay']);
+
+Route::post('/delet-rent',[RentalController::class,'DeleteRental']);

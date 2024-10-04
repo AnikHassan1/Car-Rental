@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Car extends Model
 {
     protected $guarded = ["id"];
+    
+    public function rentals() {
+        return $this->hasMany(rentals::class);
+    }
 }
