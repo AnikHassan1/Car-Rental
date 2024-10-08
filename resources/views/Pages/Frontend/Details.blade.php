@@ -2,7 +2,7 @@
 @section('title','home-page')
 @section('breadcrumb-title','Details About the Car')
 @section('breadcrumb-message','We d love to hear from you! Discover the Details of the Car!')
-@section('url','/homePage')
+@section('url','/')
 @section('breadcrumb-page','Details')
 @section('content')
 @include('Component.frontend.Navvar')

@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Exception;
 use App\Models\User;
+use App\Models\profile;
+use App\Helper\JWTToken;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Helper\JWTToken;
+use Illuminate\Support\Facades\Hash;
+
 class customerController extends Controller
 {
     public function SignUpUser(Request $request){
@@ -37,23 +40,28 @@ class customerController extends Controller
     $email =$request->input('email');
     $password =$request->input('password');
 
-    $data =User::where('email',$email)->where('password',$password)->first();
+    $data =User::where('email',$email)->first();
 
-    if($data->role === 'admin'){
-         $token =JWTToken::createToken($email,$data->id);
-         return response()->json([
-            "status"=>"success",
-            "url"=>'/',
-            "message"=>"Admin Login Successfull"
-         ],200)->cookie('token',$token,60*60*60);
-    }else{
-       $token =JWTToken::createToken($email,$data->id);
-       return response()->json([
-        "status"=>"success",
-        "url"=>'user',
-        "message"=>"User Login Successfull"
-     ],200)->cookie('token',$token,60*60*60);
+    if($data && Hash::check($password,$data->password)){
+      
+        if($data->role === 'admin'){
+            $token =JWTToken::createToken($email,$data->id);
+            return response()->json([
+               "status"=>"success",
+               "url"=>'/',
+               "message"=>"Admin Login Successfull"
+            ],200)->cookie('token',$token,60*60*60);
+       }else{
+          $token =JWTToken::createToken($email,$data->id);
+          return response()->json([
+           "status"=>"success",
+           "url"=>'user',
+           "message"=>"User Login Successfull"
+        ],200)->cookie('token',$token,60*60*60);
+       }
     }
+
+   
 
  } 
  
@@ -76,5 +84,39 @@ class customerController extends Controller
         "message"=>"Reset Password Failed"
     ]);
    }
+ }
+ function Logout(Request $request){
+    return response()->redirectTo("/login-page")->cookie('token','',-1);
+ }
+ function userId(Request $request){
+  $user_id =$request->header('id');
+ //return  $user_id;
+    return User::where('id',$user_id)->first();
+ }
+
+ 
+ function ProfileUpdate(Request $request){
+    $user_id = $request->header('id');
+    $number = $request->input('number');
+    $address = $request->input('address');
+
+    profile::updateOrCreate([
+        'user_id'=>$user_id,
+        'number'=>$number,
+        'address'=>$address
+    ]);
+    return response()->json([
+        "status"=>"success",
+        "message"=>"Profile Updated"
+    ]);
+ }
+ function getProfile(Request $request){
+    $user_id = $request->header('id');
+    return profile::where('user_id',$user_id)->with('user')->first();
+ }
+
+ function userListByrent(){
+    $users = profile::with('User')->get();
+    return view('Pages.Admin.Customer',compact('users'));
  }
 }

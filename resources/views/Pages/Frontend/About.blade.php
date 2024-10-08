@@ -2,7 +2,7 @@
 @section('title','About-page')
 @section('breadcrumb-title','About Our Organization')
 @section('breadcrumb-message','At EcoSolutions, we are committed to providing the best car rental services in the county.')
-@section('url','/homePage')
+@section('url','/')
 @section('breadcrumb-page','About')
 @section('content')
 @include('Component.frontend.Navvar')

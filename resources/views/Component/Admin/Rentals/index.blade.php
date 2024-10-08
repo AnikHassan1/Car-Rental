@@ -1,6 +1,6 @@
 <div class="container">
     <h2>Manage Rentals</h2>
-    <table class="table">
+    <table class="table-responsive" id="datatable">
         <thead>
             <tr>
                 <th>Rental ID</th>
@@ -16,7 +16,7 @@
         <tbody>
             @foreach ($rentals as $rental)
                 <tr>
-                    <td>{{ $rental->id }}</td>
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $rental->user->name }}</td>
                     <td>{{ $rental->car->name }} ({{ $rental->car->brand }})</td>
                     <td>{{ $rental->start_date }}</td>
@@ -49,4 +49,7 @@
     }
     //console.log(det)
  })
+ new DataTable('#datatable'),{
+    lengthMenu:[10,20,30,40]
+}
 </script>

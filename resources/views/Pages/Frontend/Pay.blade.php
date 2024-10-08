@@ -2,7 +2,7 @@
 @section('title','Bill-page')
 @section('breadcrumb-title','Proceed to order for this amount.')
 @section('breadcrumb-message','Finalize your order at this price. Have a great experience with Our car service!')
-@section('url','/homePage')
+@section('url','/')
 @section('breadcrumb-page','pay-Bill')
 @section('content')
 @include('Component.frontend.Navvar')

@@ -55,7 +55,7 @@
           }else if(res.status === 200 && res.data.url == 'user'){
             successToast(res.data.message);
             setTimeout(()=>{
-                window.location.href='/homePage';
+                window.location.href='/';
                });
           }
           else{

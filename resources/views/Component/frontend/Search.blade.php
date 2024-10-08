@@ -1,60 +1,55 @@
 <!-- Search Box Banner Section -->
 <div class="search-box-banner py-4">
     <div class="container">
-        <form action="listing-grid.html">
+       
             <div class="row align-items-end">
-                <!-- Pickup Location -->
-                <div class="col-lg-3 col-md-6 mb-3">
-                    <div class="input-block">
-                        <label class="form-label">Pickup Location</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Enter City, Airport, or Address">
-                            <span class="input-group-text"><i class="feather-map-pin"></i></span>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Pickup Date and Time -->
-                <div class="col-lg-3 col-md-6 mb-3">
+                <div class="col-lg-4 col-md-6 mb-3">
                     <div class="input-block">
                         <label class="form-label">Pickup Date & Time</label>
                         <div class="input-group">
-                            <input type="text" class="form-control datetimepicker" placeholder="04/11/2023">
+                            <input id="pickUp" type="date" class="form-control datetimepicker" placeholder="04/11/2023">
                             <span class="input-group-text"><i class="feather-calendar"></i></span>
                         </div>
-                        <div class="input-group mt-2">
-                            <input type="text" class="form-control timepicker" placeholder="11:00 AM">
-                            <span class="input-group-text"><i class="feather-clock"></i></span>
-                        </div>
+                      
                     </div>
                 </div>
-
-                <!-- Return Date and Time -->
-                <div class="col-lg-3 col-md-6 mb-3">
+                <div class="col-lg-4 col-md-6 mb-3">
                     <div class="input-block">
                         <label class="form-label">Return Date & Time</label>
                         <div class="input-group">
-                            <input type="text" class="form-control datetimepicker" placeholder="04/11/2023">
+                            <input id="Return" type="date" class="form-control datetimepicker" placeholder="04/11/2023">
                             <span class="input-group-text"><i class="feather-calendar"></i></span>
                         </div>
-                        <div class="input-group mt-2">
-                            <input type="text" class="form-control timepicker" placeholder="11:00 AM">
-                            <span class="input-group-text"><i class="feather-clock"></i></span>
-                        </div>
+                       
                     </div>
                 </div>
 
                 <!-- Search Button -->
-                <div class="col-lg-3 col-md-6 text-center">
-                    <button class="btn btn-primary w-100 search-button" type="submit">
+                <div class="col-lg-4 col-md-6 text-center">
+                    <button onclick="SearchBtn()" class="btn bg-gradient-success w-100 search-button" type="submit">
                         <i class="fa fa-search" aria-hidden="true"></i> Search
                     </button>
                 </div>
             </div>
-        </form>
+      
     </div>
 </div>
+<script>
+    async function SearchBtn(){
+           let dateOne = document.getElementById('pickUp').value;
+           let dateTwo = document.getElementById('Return').value;
 
+           if(dateOne.length === 0){
+            errorToast("Pickup Date & Time is Required");
+           }else if(dateTwo.length === 0){
+            errorToast("Pickup Date & Time is Required");
+           }else{
+            window.location.href =`/cars-Search`;
+            
+           }
+    }
+</script>
 <style>
 /* Search Box Styling */
 .search-box-banner {

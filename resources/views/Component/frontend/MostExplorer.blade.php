@@ -4,7 +4,7 @@
             <h2>Explore Most Popular Cars</h2>
             <p>Find the most sought-after cars that suit your lifestyle and travel needs.</p>
         </div>
-        <ul class="nav listing-buttons gap-3 justify-content-center flex-wrap" data-bs-tabs="tabs" role="tablist">
+        {{--  <ul class="nav listing-buttons gap-3 justify-content-center flex-wrap" data-bs-tabs="tabs" role="tablist">
             <!-- Mazda Tab -->
             <li class="card mb-4">
                 <a class="card-body active" aria-current="true" data-bs-toggle="tab" href="#Carmazda" aria-selected="true"
@@ -65,7 +65,7 @@
                     Tesla
                 </a>
             </li>
-        </ul>
+        </ul>  --}}
     </div>
 
     <div class="row mx-5" id="carList">
@@ -116,8 +116,8 @@
                                   </div>
                               </div>
                               <div class="d-flex gap-5 ms-3">
-                                <a href="" data-id="${item['id']}"  type="button"  class="btn Rent-id bg-success py-2 mr-1 rounded-pill shadow">Book Now</a>
-                                 <a href="" data-id="${item['id']}" type="button" class="btn details-id bg-primary py-2 mr-1 rounded-pill shadow">Details</a>
+                                <a href="" data-id="${item['id']}"  type="button"  class="btn bg-gradient-success Rent-id  py-2 mr-1 rounded-pill shadow">Book Now</a>
+                                 <a href="" data-id="${item['id']}" type="button" class=" details-id btn bg-gradient-primary py-2 mr-1 rounded-pill shadow">Details</a>
                             </div>
                             </div>
                             </div>`;

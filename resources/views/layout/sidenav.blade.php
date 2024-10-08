@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Car Rentals Admin || @yield('title')</title>
 
-    <link rel="icon" type="image/x-icon" href="{{asset('assets/images/default.jpg')}}" />
+    <link rel="shortcut icon" href="{{ asset('assets/images/logo.png') }}" />
     <link href="{{asset('assets/css/bootstrap.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/css/animate.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/css/fontawesome.css')}}" rel="stylesheet" />
@@ -46,18 +46,7 @@
                         <img class="rounded-circle me-2" src="{{asset('assets/images/user.webp')}}" alt="User" style="width: 40px; height: 40px;">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end text-center shadow-lg border-0" aria-labelledby="userDropdown" style="min-width: 200px;">
-                        <li>
-                            <div class="py-3">
-                                <img class="rounded-circle mb-2" src="{{asset('images/user.webp')}}" alt="User" style="width: 60px; height: 60px;">
-                                <h6 class="mb-0">User Name</h6>
-                            </div>
-                            <hr class="dropdown-divider mx-2" />
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{{url('/ProfilePage')}}">
-                                <i class="bi bi-person-fill me-2"></i> Profile
-                            </a>
-                        </li>
+                            
                         <li>
                             <a class="dropdown-item text-danger" href="{{url('/userLogOut')}}">
                                 <i class="bi bi-box-arrow-right me-2"></i> Logout

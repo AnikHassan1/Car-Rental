@@ -3,7 +3,7 @@
         <div class="card-body">
             <div class="row d-flex align-items-center justify-content-center h-100">
                 <div class="col-md-8 col-lg-7 col-xl-6">
-                    <img src="{{ asset('images/logout.jpg') }}" class="img-fluid rounded" alt="Log Out Image">
+                    <img src="{{ asset('assets/images/Log Out.webp') }}" class="img-fluid rounded" alt="Log Out Image">
                 </div>
                 <div class="col-md-4 col-lg-5 col-xl-4">
                     <h2 class="text-center mb-4">Log Out</h2>
@@ -12,7 +12,7 @@
                         <button onclick="logout()" class="btn btn-danger btn-lg btn-block mt-3">Log Out</button>
                     </div>
                     <h5 class="mt-4">Want to stay logged in? 
-                        <a href="{{ url('/homePage') }}" class="login-link">Cancel</a>
+                        <a href="{{ url('/') }}" class="login-link">Cancel</a>
                     </h5>
                 </div>
             </div>
@@ -20,23 +20,23 @@
     </div>
 </section>
 
-//<script>
-//    async function logout(){
-//        try {
-//            let res = await axios.post('/logout-User');
-//            if (res.status === 200) {
-//                successToast(res.data.message);
-//                setTimeout(() => {
-//                    window.location.href = '/';
-//                }, 2000);
-//            } else {
-//                errorToast("Logout Failed");
-//            }
-//        } catch (error) {
-//            errorToast("Logout Failed");
-//        }
-//    }
-//</script>
+<script>
+    async function logout(){
+        try {
+            let res = await axios.post('/logout-User');
+            if (res.status === 200) {
+                successToast(res.data.message);
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 1000);
+            } else {
+                errorToast("Logout Failed");
+            }
+        } catch (error) {
+            errorToast("Logout Failed");
+        }
+    }
+</script>
 
 <style>
     body {

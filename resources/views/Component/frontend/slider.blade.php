@@ -7,7 +7,7 @@
           <p class="lead mb-4">
             Experience the ultimate in comfort, performance, and style with our wide selection of premium rental cars. Choose the perfect vehicle for your needs today.
           </p>
-          <a href="/rentals" class="btn btn-primary btn-lg">Explore Now</a>
+          <a href="/rentals" class="btn bg-gradient-success btn-lg">Explore Now</a>
         </div>
   
         <!-- Right Side: Banner Image -->

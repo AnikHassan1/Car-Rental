@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use Exception;
+use App\Models\profile;
 use App\Models\rentals;
 use App\Helper\JWTToken;
 use Illuminate\Http\Request;
@@ -11,32 +12,33 @@ use Illuminate\Foundation\Auth\User;
 
 class pageController extends Controller
 {
+    public function getUserFromToken(Request $request)
+    {
+        try {
+            $token = $request->cookie('token');
+
+            if ($token) {
+                $data = JWTToken::verifyToken($token);
+                return User::where('email', $data->userEmail)
+                    ->where('id', $data->userId)
+                    ->where('role', 'customer')
+                    ->first();
+            }
+
+            return null; // No token, return null
+        } catch (Exception $e) {
+            return null; // Return null in case of an error
+        }
+    }
+
     function AdminPage()
     {
         return view('Pages.Admin.admin');
     }
     function HomePage(Request $request)
     {
-        try {
-            if ($request->cookie('token') === null) {
-                return view("Pages.Frontend.home");
-            } else {
-                $token = $request->cookie('token');
-                $data = JWTToken::verifyToken($token);
-                $user = User::where('email', $data->userEmail)
-                    ->where('id', $data->userId)
-                    ->where('role','customer')
-                    ->first();
-                   echo($user);
-                if ($user) {
-                    return view("Pages.Frontend.home", ['user' => $user]);
-                } else {
-                    return view("Pages.Frontend.home");
-                }
-            }
-        } catch (Exception $e) {
-            return view("Pages.Frontend.home")->with(['error'=>'Invalid session or token']);
-        }
+       $user =$this->getUserFromToken($request);
+       return view('Pages.Frontend.home',['user'=>$user]);
     }
     function SignUp()
     {
@@ -45,6 +47,10 @@ class pageController extends Controller
     function Login()
     {
         return view("Pages.Auth.SignIn");
+    }
+    function userLogOut()
+    {
+        return view("Pages.Auth.Logout");
     }
     function ResetPage()
     {
@@ -56,19 +62,18 @@ class pageController extends Controller
         return view("Pages.Frontend.Details", compact('id'));
     }
 
-    function RentalPage()
+    function RentalPage(Request $request)
     {
-        return view('Pages.Frontend.Rental');
+        $user =$this->getUserFromToken($request);
+        return view('Pages.Frontend.Rental',['user'=>$user]);
     }
-    function AboutPage()
+    function AboutPage(Request $request)
     {
-        return view('Pages.Frontend.About');
+        $user = $this->getUserFromToken($request);
+        return view('Pages.Frontend.About',['user'=>$user]);
     }
 
-    function CustomerPages()
-    {
-        return view('Pages.Admin.Customer');
-    }
+  
     function Dashboard()
     {
         return view('Pages.Admin.Deshboard');
@@ -77,17 +82,29 @@ class pageController extends Controller
     {
         return view('Pages.Admin.Car');
     }
-   
-    function ContactPage()
+
+    function ContactPage(Request $request)
     {
-        return view('Pages.Frontend.Contact');
+        $user =$this->getUserFromToken($request);
+        return view('Pages.Frontend.Contact',['user'=>$user]);
     }
     function RentalPages(Request $request)
     {
         $id = $request->id;
-        return view('Pages.Frontend.RentalCreate',compact('id'));
+        return view('Pages.Frontend.RentalCreate', compact('id'));
     }
-    function billPay(){
-        return view('Pages.Frontend.Pay');
+    function billPay(Request $request)
+    {
+        $id = $request->id;
+        return view('Pages.Frontend.Pay', compact('id'));
+    }
+    function ProfilePage()
+    {
+        return view('Component.frontend.Profile');
+    }
+
+    function carsSearch()
+    {
+        return view('Pages.Frontend.CarSearch');
     }
 }

@@ -18,7 +18,7 @@
                     <div class="footer-widget">
                         <h5 class="footer-title text-white text-uppercase">Information</h5>
                         <ul class="list-unstyled">
-                            <li><a href="/homePage" class="text-light">Home</a></li>
+                            <li><a href="/" class="text-light">Home</a></li>
                             <li><a href="/rentals" class="text-light">Rentals</a></li>
                             <li><a href="/about" class="text-light">About</a></li>
                             <li><a href="/contact" class="text-light">Contact</a></li>

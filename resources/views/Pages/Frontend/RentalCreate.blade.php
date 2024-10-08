@@ -4,7 +4,7 @@
 @section('breadcrumb-message','Choose from a diverse fleet of vehicles tailored to your needs.
 Enjoy transparent pricing, flexible options, and exceptional customer service. ')
 @section('breadcrumb-page','Rental-Create')
-@section('url','/homePage')
+@section('url','/')
 
 @section('content')
 @include('Component.frontend.Navvar')

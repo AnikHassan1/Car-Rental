@@ -22,10 +22,17 @@
                     <p class="card-text">Price: <span class="fw-bold">$${data.daily_rent_price}</span></p>
                     <p class="card-text">Status: <span class="${data.availability === 1 ? "text-success" : "text-danger"} fw-bold">${data.availability === 1 ? "Available" : "Unavailable"}</span></p>
                 </div>
-                <a href="#" class="btn btn-success mt-3 rounded-pill">Rent Now</a>
+                <a href="#" data-id="${data.id}" class="btn btn-success rent-id mt-3 rounded-pill">Rent Now</a>
             </div>
         `;
         carDetails.insertAdjacentHTML('beforeend', dataRender);
+
+        $('.rent-id').on('click',function(){
+            let id =$(this).data('id');
+            window.location.href = `/Rentview/${id}`;
+         });
+       
     }
+   
 </script>
 

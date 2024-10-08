@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg fixed-top px-0 mb-5 shadow-lg bg-light">
     <div class="container-fluid">
         <!-- Brand Logo -->
-        <a class="navbar-brand d-flex align-items-center" href="#">
+        <a class="navbar-brand d-flex align-items-center" href="/">
             <img class="nav-logo mx-2" src="{{ asset('assets/images/logo (1).svg') }}" alt="Logo" />
         </a>
 
@@ -15,13 +15,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0 align-items-center">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ url('/homePage') }}">Home</a>
+                    <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Home</a>
                 </li>
-             
+            
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/about') }}">About</a>
                 </li>
-            
+           
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/rentals') }}">Rentals</a>
                 </li>
@@ -30,17 +30,13 @@
                     <a class="nav-link" href="{{ url('/contact') }}">Contact</a>
                 </li>
             
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/login-page') }}">Log out</a>
-                </li>
-            
+                @if(!isset($user))
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/login-page') }}">Sign In</a>
                 </li>
-               
-
+               @endif
             </ul>
-         
+              @if(isset($user))
                 <!-- User Dropdown Menu -->
                 <div class="ml-auto h-auto d-flex align-items-center float-end">
                     <div class="dropdown">
@@ -55,12 +51,12 @@
                                 <div class="py-3">
                                     <img class="rounded-circle mb-2" src="{{ asset('images/user.webp') }}"
                                         alt="User" style="width: 60px; height: 60px;">
-                                    <h6 class="mb-0">User Name</h6>
+                                    <h6 class="mb-0">{{ $user->name }}</h6>
                                 </div>
                                 <hr class="dropdown-divider mx-2" />
                             </li>
                             <li>
-                                <a class="dropdown-item" href="{{ url('/ProfilePage') }}">
+                                <a class="dropdown-item" href="{{ url('/Profile_Page') }}">
                                     <i class="bi bi-person-fill me-2"></i> Profile
                                 </a>
                             </li>
@@ -72,7 +68,7 @@
                         </ul>
                     </div>
                 </div>
-             
+             @endif
         </div>
     </div>
 </nav>

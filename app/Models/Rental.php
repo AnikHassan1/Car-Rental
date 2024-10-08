@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class rentals extends Model
+class Rental extends Model
 {
     protected $guarded = ["id"];
      // Rental belongs to one car

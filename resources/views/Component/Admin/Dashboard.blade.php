@@ -1,7 +1,3 @@
-
-
-
-
 <div class="container mt-4">
     <div class="row ps-5">
         <!-- Total Car Card -->
@@ -16,6 +12,9 @@
                         <div>
                             <i class="bi bi-car-front" style="font-size: 3rem;"></i>
                         </div>
+                    </div>
+                    <div class="card-footer text-center text-light">
+                        <h4 id="tatal_car"></h4>
                     </div>
                 </div>
             </div>
@@ -33,6 +32,9 @@
                         <div>
                             <i class="bi bi-car-front-fill" style="font-size: 3rem;"></i>
                         </div>
+                    </div>
+                    <div class="card-footer text-center text-light">
+                        <h4 id="available"></h4>
                     </div>
                 </div>
             </div>
@@ -55,7 +57,7 @@
                     </div>
                 </div>
                 <div class="card-footer text-center text-light">
-                    <h4>1,200</h4> <!-- Example rental count -->
+                    <h4 id="total_rent"></h4> 
                 </div>
             </div>
         </div>
@@ -73,10 +75,22 @@
                     </div>
                 </div>
                 <div class="card-footer text-center">
-                    <h4>$35,000</h4> <!-- Example earnings amount -->
+                    <h4>$<span id="total_earn"></span></h4>
+                   
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    deshboard();
+   async function deshboard(){
+    let res =await axios.get('/desh_board');
+    console.log(res)
+        document.getElementById('tatal_car').innerText=res.data['total_car'];
+        document.getElementById('available').innerText=res.data['availble'];
+        document.getElementById('total_rent').innerText=res.data['total_rantal'];
+        document.getElementById('total_earn').innerText=res.data['total_earn'];
+   }
+</script>
 

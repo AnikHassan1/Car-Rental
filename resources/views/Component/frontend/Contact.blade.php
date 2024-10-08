@@ -60,7 +60,7 @@ async function submitContact(){
     if(res.status === 200 && res.data.status === 'success'){
         successToast(res.data.message);
         setTimeout(()=>{
-           window.location.href='/homePage';
+           window.location.href='/';
         },1000);
     }else{
         errorToast(res.data.message);

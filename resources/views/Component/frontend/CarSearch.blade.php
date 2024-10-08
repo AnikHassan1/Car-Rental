@@ -7,8 +7,8 @@
 <script>
     getData()
     async function getData() {
-            let res = await axios.get('/cars');
-            console.log(res);
+            let res = await axios.post('/car-seach-date');
+         //   console.log(res);
             if (res.status === 200) {
                 res.data.forEach(item => {
                     let data = `

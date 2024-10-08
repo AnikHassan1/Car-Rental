@@ -13,7 +13,7 @@
                             readonly>
                     </div>
                 </div>
-
+                <input type="hidden" id="carid">
                 <div class="form-outline mb-4">
                     <label class="form-label" for="pickDate">Pick-up Date</label>
                     <input type="date" id="pickDate" class="form-control form-control-lg" required>
@@ -24,7 +24,7 @@
                     <input type="date" id="dropDate" class="form-control form-control-lg" required>
                 </div>
 
-                <button onclick="submitRent()" type="submit" class="btn btn-success btn-lg w-100">Rent Now</button>
+                <button onclick="submitRent()" type="submit" class="btn bg-gradient-primary w-100">Rent Now</button>
             </div>
         </div>
     </div>
@@ -33,7 +33,7 @@
     olddata();
 
     async function olddata() {
-        let id = {{ $id }};
+        let id = @json($id);
         let carData = document.getElementById('carData');
         let res = await axios.post('/carsId', {
             id: id
@@ -41,6 +41,7 @@
 
         // Set daily rent with formatting
         document.getElementById('dailyRent').value = res.data.daily_rent_price; // Assuming this is a number
+        document.getElementById('carid').value = {{ $id }}; // Assuming this is a number
 
 
         let data = `
@@ -57,7 +58,7 @@
 
                 <div class=" d-flex justify-content-between px-5 mt-2">
                     <div class="d-flex gap-2 w-100">
-                        <img class="w-10" src="{{ asset('assets/images/model.svg') }}">
+                        <img class="w-5" src="{{ asset('assets/images/model.svg') }}">
                         <div class="d-flex gap-2 pt-3">
                             <p>${res.data['brand']}</p>
                             <p>${res.data['model']}</p>
@@ -66,7 +67,7 @@
                     <div class="d-flex gap-2">
                         <img src="{{ asset('assets/images/year.svg') }}">
                         <p class="pt-3">${res.data['year']}</p>
-
+                             
                     </div>
                 </div>
                 </div>   
@@ -74,35 +75,46 @@
         carData.insertAdjacentHTML('beforeend', data);
 
     }
-    async function submitRent(){
-        let car_id = {{ $id }};
-        let price =document.getElementById('dailyRent').value;
-        let pickUpDate =document.getElementById('pickDate').value;
-        let DropDate =document.getElementById('dropDate').value;
-        if(pickUpDate.length === 0){
+    async function submitRent() {
+        let car_id = document.getElementById('carid').value;
+        // console.log(car_id);
+        let price = document.getElementById('dailyRent').value;
+        let pickUpDate = document.getElementById('pickDate').value;
+        let DropDate = document.getElementById('dropDate').value;
+        if (pickUpDate.length === 0) {
             errorToast("Pick Up Date is Required");
-        }else if(DropDate.length === 0){
+        } else if (DropDate.length === 0) {
             errorToast("Pick Up Date is Required");
-        }else{
+        } else {
             let pickDate = new Date(pickUpDate);
             let dropDate = new Date(DropDate);
-        
+
             // Calculate the difference in milliseconds
             let differenceInTime = dropDate - pickDate;
-        
+
             // Convert milliseconds to days
             let difRentDate = differenceInTime / (1000 * 3600 * 24);
             let RentPrice = price * difRentDate;
-           // console.log(RentPrice);
+            // console.log(RentPrice);
 
-           let res=await axios.post('/rentConfirm',{car_id:car_id,start_date:pickUpDate,end_date:DropDate,total_price:RentPrice});
-           if(res.status === 200 && res.data.status==='success'){
-            succerToast(res.data.message);
-            setTimeout(()=>{
-             window.location.href ='contact';
-            },1000)
-           }
-        
+            let res = await axios.post('/rentConfirm', {
+                car_id: car_id,
+                start_date: pickUpDate,
+                end_date: DropDate,
+                total_price: RentPrice
+            });
+            // console.log(res)
+            if (res.status == 200 && res.data.status === 'success') {
+                successToast(res.data.message);
+                let cars = await axios.post('/carById', {
+                    id: car_id
+                });
+                console.log(cars);
+                setTimeout(() => {
+                    window.location.href = `/pay/${car_id}`;
+                }, 1000)
+            }
+
         }
     }
 </script>

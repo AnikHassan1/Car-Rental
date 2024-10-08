@@ -34,7 +34,7 @@ class User extends Authenticatable
 
     // Define relationship: User can have many rentals
     public function rentals() {
-        return $this->hasMany(rentals::class);
+        return $this->hasMany(Rental::class);
     }
     /**
      * The attributes that should be hidden for serialization.
