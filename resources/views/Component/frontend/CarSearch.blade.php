@@ -1,6 +1,6 @@
 <div class="container my-4">
     <div class="row" id="rentalsData">
-       
+
 
     </div>
 </div>
@@ -8,8 +8,8 @@
     getData()
     async function getData() {
             let res = await axios.post('/car-seach-date');
-         //   console.log(res);
-            if (res.status === 200) {
+            console.log(res);
+            if (res.status === 200 && res.data.length === 1) {
                 res.data.forEach(item => {
                     let data = `
                   <div class="col-md-4  mt-2">
@@ -60,7 +60,10 @@
                  rentalsData.insertAdjacentHTML('beforeend', data);
                 });
             } else {
-                errorToast('Failed ');
+                errorToast('The selected date does not have any available cars');
+                setTimeout(()=>{
+                    window.location.href='/rentals';
+                },1000);
             }
             $('.details-id').on('click',function(e){
                 e.preventDefault();
@@ -73,8 +76,8 @@
                 let id =$(this).data('id')
                 window.location.href = `/Rentview/${id}`;
               })
-        } 
-   
+        }
+
 </script>
 <style>
     .btn {

@@ -29,6 +29,8 @@
         </div>
     </div>
 </div>
+
+
 <script>
     olddata();
 
@@ -39,9 +41,9 @@
             id: id
         });
 
-        // Set daily rent with formatting
-        document.getElementById('dailyRent').value = res.data.daily_rent_price; // Assuming this is a number
-        document.getElementById('carid').value = {{ $id }}; // Assuming this is a number
+
+        document.getElementById('dailyRent').value = res.data.daily_rent_price;
+        document.getElementById('carid').value = @json($id);
 
 
         let data = `
@@ -67,56 +69,70 @@
                     <div class="d-flex gap-2">
                         <img src="{{ asset('assets/images/year.svg') }}">
                         <p class="pt-3">${res.data['year']}</p>
-                             
+
                     </div>
                 </div>
-                </div>   
+                </div>
                `;
         carData.insertAdjacentHTML('beforeend', data);
 
     }
     async function submitRent() {
-        let car_id = document.getElementById('carid').value;
-        // console.log(car_id);
-        let price = document.getElementById('dailyRent').value;
-        let pickUpDate = document.getElementById('pickDate').value;
-        let DropDate = document.getElementById('dropDate').value;
-        if (pickUpDate.length === 0) {
-            errorToast("Pick Up Date is Required");
-        } else if (DropDate.length === 0) {
-            errorToast("Pick Up Date is Required");
-        } else {
-            let pickDate = new Date(pickUpDate);
-            let dropDate = new Date(DropDate);
 
-            // Calculate the difference in milliseconds
-            let differenceInTime = dropDate - pickDate;
+            @if (request()->hasCookie('token'))
 
-            // Convert milliseconds to days
-            let difRentDate = differenceInTime / (1000 * 3600 * 24);
-            let RentPrice = price * difRentDate;
-            // console.log(RentPrice);
+                let car_id = document.getElementById('carid').value;
 
-            let res = await axios.post('/rentConfirm', {
-                car_id: car_id,
-                start_date: pickUpDate,
-                end_date: DropDate,
-                total_price: RentPrice
-            });
-            // console.log(res)
-            if (res.status == 200 && res.data.status === 'success') {
-                successToast(res.data.message);
-                let cars = await axios.post('/carById', {
-                    id: car_id
-                });
-                console.log(cars);
-                setTimeout(() => {
-                    window.location.href = `/pay/${car_id}`;
-                }, 1000)
-            }
+                let price = document.getElementById('dailyRent').value;
+                let pickUpDate = document.getElementById('pickDate').value;
+                let DropDate = document.getElementById('dropDate').value;
+                if (pickUpDate.length === 0) {
+                    errorToast("Pick Up Date is Required");
+                } else if (DropDate.length === 0) {
+                    errorToast("Pick Up Date is Required");
+                } else {
+                    let pickDate = new Date(pickUpDate);
+                    let dropDate = new Date(DropDate);
+
+
+                    let differenceInTime = dropDate - pickDate;
+
+
+                    let difRentDate = differenceInTime / (1000 * 3600 * 24);
+                    let RentPrice = price * difRentDate;
+
+
+                    let res = await axios.post('/rentConfirm', {
+                        car_id: car_id,
+                        start_date: pickUpDate,
+                        end_date: DropDate,
+                        total_price: RentPrice
+                    });
+                   // console.log(res)
+                    if (res.status == 200 && res.data.status === 'success') {
+                        successToast(res.data.message);
+                        let cars = await axios.post('/carById', {
+                            id: car_id
+                        });
+                       // console.log(cars);
+                        setTimeout(() => {
+                            window.location.href = `/pay/${car_id}`;
+                        }, 1000)
+                    } else {
+                        errorToast("The Car Is Already Reserved ! Please Choice Another Car");
+                        setTimeout(() => {
+                            window.location.href = '/rentals';
+                        }, 1000);
+
+                    }
+                }
+            @else
+                window.location.href = 'http://127.0.0.1:8000/login-page';
+            @endif
 
         }
-    }
+
+
 </script>
 
 <style>

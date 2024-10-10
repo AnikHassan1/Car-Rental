@@ -73,7 +73,7 @@ class pageController extends Controller
         return view('Pages.Frontend.About',['user'=>$user]);
     }
 
-  
+
     function Dashboard()
     {
         return view('Pages.Admin.Deshboard');
@@ -95,16 +95,18 @@ class pageController extends Controller
     }
     function billPay(Request $request)
     {
+        $user =$this->getUserFromToken($request);
         $id = $request->id;
-        return view('Pages.Frontend.Pay', compact('id'));
+        return view('Pages.Frontend.Pay', compact('id','user'));
     }
     function ProfilePage()
     {
         return view('Component.frontend.Profile');
     }
 
-    function carsSearch()
+    function carsSearch(Request $request)
     {
-        return view('Pages.Frontend.CarSearch');
+        $user =$this->getUserFromToken($request);
+        return view('Pages.Frontend.CarSearch',['user'=>$user]);
     }
 }

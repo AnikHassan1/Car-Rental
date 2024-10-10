@@ -16,17 +16,19 @@ class AuthMiddleWare
      */
     public function handle(Request $request, Closure $next): Response
     {
-      
+
         $token = $request->cookie('token');
         $data = JWTToken::verifyToken($token);
 
             if ($data == "unauthorized") {
-                return redirect()->route('login.page');
-            } else {
+                return redirect('/login-page');
+            }
+            else {
                 $request->headers->set('email', $data->userEmail);
                 $request->headers->set('id', $data->userId);
+                return $next($request);
             }
-        
-        return $next($request);
+
+
     }
 }

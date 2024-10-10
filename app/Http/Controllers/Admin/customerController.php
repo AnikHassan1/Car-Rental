@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Exception;
 use App\Models\User;
+use App\Models\Rental;
 use App\Models\profile;
 use App\Helper\JWTToken;
 use Illuminate\Http\Request;
@@ -34,7 +35,7 @@ class customerController extends Controller
            "message"=>"Sign Up Fail"
           ]);
         }
-        
+
     }
  public function LoginUser(Request $request){
     $email =$request->input('email');
@@ -43,7 +44,7 @@ class customerController extends Controller
     $data =User::where('email',$email)->first();
 
     if($data && Hash::check($password,$data->password)){
-      
+
         if($data->role === 'admin'){
             $token =JWTToken::createToken($email,$data->id);
             return response()->json([
@@ -61,10 +62,10 @@ class customerController extends Controller
        }
     }
 
-   
 
- } 
- 
+
+ }
+
  public function ResetPassword(Request $request){
    try{
     $oldpass = $request->input('oldpassword');
@@ -94,7 +95,7 @@ class customerController extends Controller
     return User::where('id',$user_id)->first();
  }
 
- 
+
  function ProfileUpdate(Request $request){
     $user_id = $request->header('id');
     $number = $request->input('number');
@@ -116,7 +117,37 @@ class customerController extends Controller
  }
 
  function userListByrent(){
-    $users = profile::with('User')->get();
-    return view('Pages.Admin.Customer',compact('users'));
+    $users = User::with(['profile', 'Rental'])->get();
+    return view('Pages.Admin.Customer', compact('users'));
  }
+
+//  function deleteCustomer(Request $request){
+//     $id = $request->input('id');
+//     try {
+//         $user = profile::findOrFail($id);
+//         $rant = Rental::findOrFail($id);
+//         $user->delete();
+//         $rant->delete();
+
+//         return response()->json([
+//             'status' => 'success',
+//             'message' => 'Customer deleted successfully.'
+//         ]);
+//     } catch (\Exception $e) {
+//         return response()->json([
+//             'status' => 'error',
+//             'message' => 'Failed to delete customer: ' . $e->getMessage()
+//         ], 500);
+//     }
+//  }
+
+function existProfile(Request $request){
+    $id = $request->header('id');
+    $data =  profile::where('user_id',$id)->first();
+    return $data;
+      return response()->json([
+        "status"=>"NProfile"
+      ]);
+    }
 }
+

@@ -59,18 +59,18 @@ class CarController extends Controller
     {
         try{
             if ($request->hasFile('image')) {
-            
+
                 $id = $request->input('id');
                 $img = $request->file('image');
-    
+
                 // $filepath = $request->input("filePath");
                 $oldImage = Car::where("id", $id)->first();
                  unlink($oldImage->image);
-    
+
                 $img_name = "car_" . time() . "." . $img->getClientOriginalExtension();
                 $img_url = "uploads/cars/{$img_name}";
                 $img->move(public_path('uploads/cars/'), $img_name);
-    
+
                 Car::where('id', $id)->update([
                     'name' => $request->input('name'),
                     'brand' =>  $request->input('brand'),
@@ -81,7 +81,7 @@ class CarController extends Controller
                     'availability' =>  $request->input('availability'),
                     'image' => $img_url
                 ]);
-    
+
                 return response()->json([
                     "status" => "success",
                     "message" => "Image Update Successful"
@@ -95,7 +95,7 @@ class CarController extends Controller
                     'car_type' =>  $request->input('car_type'),
                     'daily_rent_price' =>  $request->input('daily_rent_price'),
                     'availability' =>  $request->input('availability')
-    
+
                 ]);
                 return response()->json([
                     "status" => "success",
@@ -110,7 +110,7 @@ class CarController extends Controller
                 "error" => $th->getMessage(),
             ]);
         }
-       
+
     }
 
     public function deleteCar(Request $request){
@@ -142,7 +142,7 @@ class CarController extends Controller
                 "message"=>"Contact Data not  Submited"
           ]);
         }
-       
+
     }
 
     public function carIdUpdate(Request $request){
@@ -152,6 +152,10 @@ class CarController extends Controller
         ]);
     }
     public function carSearchDate(Request $request){
-         return Car::where('availability','=','1')->get();
+          Car::where('availability','=','1')->get();
+          return response()->json([
+            "status"=>"success",
+            "message"=>"Search Car"
+      ]);
     }
 }

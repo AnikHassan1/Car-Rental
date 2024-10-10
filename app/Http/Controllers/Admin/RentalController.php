@@ -11,28 +11,6 @@ use App\Http\Controllers\Controller;
 
 class RentalController extends Controller
 {
-    // function rentalAdmin()
-    // {
-    //     $rent = rentals::with('car', 'user')->get();
-    //    return $rent;
-    // }
-    // function singleRental(Request $request){
-    //     $user_id = $request->input('user_id');
-    //     $car_id = $request->input('car_id');
-    //     $start_date = $request->input('start_date');
-    //     $end_date = $request->input('end_date');
-
-    //     $user =User::where('id',$user_id)->get();
-    //     $car =Car::where('id', $car_id)->get();
-    //     $ran =rentals::where('car_id', $car_id)->where('user_id',$user_id)->get();
-
-    //     return response()->json([
-    //         "user"=>$user,
-    //         "car"=>$car,
-    //         "ran"=>$ran
-    //     ],200);
-    // }
-
     function RentalsPage()
     {
         $rentals = Rental::with('car', 'user')->get();
@@ -64,6 +42,6 @@ class RentalController extends Controller
 
     function date(){
         $data = Rental::with('car','user')->get();
-        return $data;
+        return $data->start_date;
     }
 }

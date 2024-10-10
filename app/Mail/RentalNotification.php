@@ -18,7 +18,7 @@ class RentalNotification extends Mailable
      */
     public $RentalNotification;
     public $isAdminNotification;
-    public function __construct($RentalNotification,$isAdminNotification= false)
+    public function __construct($RentalNotification,$isAdminNotification = false)
     {
          $this->RentalNotification=$RentalNotification;
          $this->isAdminNotification=$isAdminNotification;
@@ -40,7 +40,7 @@ class RentalNotification extends Mailable
     public function content(): Content
     {
         return new Content(
-            view:  $this->isAdminNotification ?'mail.Rentalnotification':'mail.AdminNotification',
+            view:  $this->isAdminNotification ?'mail.AdminNotification':'mail.Rentalnotification',
         );
     }
 

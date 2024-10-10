@@ -23,17 +23,27 @@
                     <td>{{ $rental->end_date }}</td>
                     <td>{{ $rental->total_price }}</td>
                     <td>
-                        <select class="form-select" id="select method" required>
-                            <option value="" disabled selected>Pending</option>
-                            <option value="1">Ongoing</option>
-                            <option value="2">Completed</option>
-                            <option value="3">Canceled</option>
+                        @php
+
+                            $today = \Carbon\Carbon::now();
+                            if ($today->isBefore($rental->start_date)) {
+                                $status = 1; // Ongoing
+                            } elseif ($today->isBetween($rental->start_date, $rental->end_date)) {
+                                $status = 2; // Completed
+                            } else {
+                                $status = 3; // Canceled
+                            }
+                        @endphp
+                        <select class="form-select" id="select" required>
+                            <option value="1" {{ $status == 1 ? 'selected' : '' }}>Ongoing</option>
+                            <option value="2" {{ $status == 2 ? 'selected' : '' }}>Completed</option>
+                            <option value="3" {{ $status == 3 ? 'selected' : '' }}>Panding</option>
                         </select>
                     </td>
-                   
+
                    <td>
-                        
-                        <button  data-id="{{ $rental->id }}" type="submit" class="btn deleteRen btn-success btn-lg">Delete</button>
+
+                        <button  data-id="{{ $rental->id }}" type="submit" class="btn deleteRen bg-gradient-primary">Delete</button>
                     </td>
                 </tr>
             @endforeach
@@ -41,6 +51,11 @@
     </table>
 </div>
 <script>
+    date()
+    async function date(){
+        let status = document.getElementById('select').value;
+
+    }
  $('.deleteRen').on('click',async function(){
     let id =$(this).data('id');
     let res =await axios.post('/delet-rent',{id:id});

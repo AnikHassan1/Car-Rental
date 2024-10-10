@@ -3,6 +3,7 @@
 @section('breadcrumb-title','Get in Touch With Us')
 @section('breadcrumb-message','We d love to hear from you! Fill out the form or reach out via our contact methods.')
 @section('url','/')
+@section('breadcrumb-page','Contact')
 @section('content')
 @include('Component.frontend.Navvar')
 @include('Component.frontend.BreadCump')

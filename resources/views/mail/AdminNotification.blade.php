@@ -10,11 +10,11 @@
     <p>A new car rental has been created.</p>
     <p>Here are the details:</p>
     <ul>
-      
-        <li><strong>Car Name:</strong> {{ $isAdminNotification['car_name'] }}</li>
-        <li><strong>Rental Start Date:</strong> {{ $isAdminNotification['start_date'] }}</li>
-        <li><strong>Rental End Date:</strong> {{ $isAdminNotification['end_date'] }}</li>
-        <li><strong>Total Cost:</strong> ${{ $isAdminNotification['total_cost'] }}</li>
+        <li><strong>Customer Name:</strong> {{ $RentalNotification['user_name'] }}</li>
+        <li><strong>Car Name:</strong> {{ $RentalNotification['car_name'] }}</li>
+        <li><strong>Rental Start Date:</strong> {{ $RentalNotification['start_date'] }}</li>
+        <li><strong>Rental End Date:</strong> {{ $RentalNotification['end_date'] }}</li>
+        <li><strong>Total Cost:</strong> ${{ $RentalNotification['total_price'] }}</li>
     </ul>
     <p>Best Regards,<br>Your Car Rental Company</p>
 </body>

@@ -44,12 +44,14 @@
 <script>
     getRentalDetails();
     async function getRentalDetails() {
-        let id = {{ $id }}
+        let id = @json($id);
+
+
 
         let res = await axios.get(`/rental/${id}`);
-        console.log(res)
+        //  console.log(res)
         let data = `
-    
+
                 <img class="img-fluid rounded w-80 h-auto mx-auto my-3" src="{{ asset('${res.data.car.image}') }}" alt="Car Image">
                 <div class="px-4 mt-2">
                     <div class="w-100">
@@ -75,9 +77,21 @@
                 </div>
                 <p class="text-success-emphasis mt-3 mx-4">Total Payment : $${ res.data.total_price}</p>
            `;
-           carData.insertAdjacentHTML('beforeend', data);
+        carData.insertAdjacentHTML('beforeend', data);
     }
-    async function submitRentInformation(){
-        window.location.href='/';
+
+    async function submitRentInformation() {
+        let transactionId = document.getElementById('transactionId').value;
+        let methodNumber = document.getElementById('methodNumber').value;
+
+        if (!transactionId || transactionId.trim() === '') {
+            errorToast("Transaction ID is required");
+        }else if (isNaN(methodNumber) || methodNumber.length < 11) {
+            errorToast("Method number must be a valid number with at least 8 characters");
+        }
+        else{
+            window.location.href = '/';
+        }
+
     }
 </script>

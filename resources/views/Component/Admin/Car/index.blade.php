@@ -50,8 +50,8 @@
                     <td>${item['daily_rent_price']}</td>
                     <td>${item['availability'] === 1 ? 'Available' : 'Unvailable'}</td>
                     <td>
-                        <button data-path="${item['image']}" data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success mt-2">Edit</button>
-                        <button data-path="${item['image']}" data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger">Delete</button>
+                        <button data-path="${item['image']}" data-id="${item['id']}" class="btn editBtn btn-sm bg-gradient-success mt-2">Edit</button>
+                        <button data-path="${item['image']}" data-id="${item['id']}" class="btn deleteBtn btn-sm bg-gradient-primary">Delete</button>
                     </td>
                  </tr>`
             tableList.append(row);
@@ -67,7 +67,7 @@
         $('.deleteBtn').on('click',async function(){
             let id =$(this).data('id')
             let path =$(this).data('path')
-           
+
             $('#delete-modal').modal('show')
             $("#deleteID").val(id);
             $('#deleteFilePath').val(path)
@@ -77,5 +77,5 @@
         }
     }
 
-    
+
 </script>
