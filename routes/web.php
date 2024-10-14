@@ -14,7 +14,7 @@ use App\Http\Controllers\Frontend\RenFronContoller;
 
 // Auth Page
 Route::get('/SignUp',[pageController::class,'SignUp']);
-Route::get('/login-page',[pageController::class,'Login']);
+Route::get('/login-page',[pageController::class,'Login'])->name('login-page');
 Route::get('/forget',[pageController::class,'ResetPage']);
 Route::get('/userLogOut',[pageController::class,'userLogOut']);
 // Auth Post Route
@@ -72,5 +72,4 @@ Route::post('/car-seach-date',[CarController::class,'carSearchDate'])->middlewar
 //delete Customer
 
 Route::post('/deletecustomer',[customerController::class,'deleteCustomer']);
-Route::get('/existProfile',[customerController::class,'existProfile']);
-
+Route::get('/testProfile',[customerController::class,'existProfile']);

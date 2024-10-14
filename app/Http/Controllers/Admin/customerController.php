@@ -144,10 +144,16 @@ class customerController extends Controller
 function existProfile(Request $request){
     $id = $request->header('id');
     $data =  profile::where('user_id',$id)->first();
-    return $data;
-      return response()->json([
-        "status"=>"NProfile"
-      ]);
+    if(is_null($data)){
+        return response()->json([
+            "status"=>"NProfile"
+          ]);
+    }else{
+        return response()->json([
+            "status"=>"aseProfile"
+          ]);
+    }
+
+
     }
 }
-

@@ -63,7 +63,6 @@ class RenFronContoller extends Controller
 
     function rentalId(Request $request)
     {
-
         return Rental::where('car_id', $request->id)->with('car', 'user')->first();
     }
 }

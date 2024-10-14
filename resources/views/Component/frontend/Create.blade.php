@@ -27,6 +27,7 @@
                 <button onclick="submitRent()" type="submit" class="btn bg-gradient-primary w-100">Rent Now</button>
             </div>
         </div>
+        <button onclick="testProfile()" class="btn bg-gradient-danger">Test</button>
     </div>
 </div>
 
@@ -77,62 +78,75 @@
         carData.insertAdjacentHTML('beforeend', data);
 
     }
-    async function submitRent() {
+    async function submitRent(Request, $request) {
 
-            @if (request()->hasCookie('token'))
-
-                let car_id = document.getElementById('carid').value;
-
-                let price = document.getElementById('dailyRent').value;
-                let pickUpDate = document.getElementById('pickDate').value;
-                let DropDate = document.getElementById('dropDate').value;
-                if (pickUpDate.length === 0) {
-                    errorToast("Pick Up Date is Required");
-                } else if (DropDate.length === 0) {
-                    errorToast("Pick Up Date is Required");
-                } else {
-                    let pickDate = new Date(pickUpDate);
-                    let dropDate = new Date(DropDate);
+        if ($request->cookie('cookie_name') === null) {
+            window.location.href = "/login-page";
+    }else{
 
 
-                    let differenceInTime = dropDate - pickDate;
+            let car_id = document.getElementById('carid').value;
+
+            let price = document.getElementById('dailyRent').value;
+            let pickUpDate = document.getElementById('pickDate').value;
+            let DropDate = document.getElementById('dropDate').value;
+            if (pickUpDate.length === 0) {
+                errorToast("Pick Up Date is Required");
+            } else if (DropDate.length === 0) {
+                errorToast("Pick Up Date is Required");
+            } else {
+                let pickDate = new Date(pickUpDate);
+                let dropDate = new Date(DropDate);
 
 
-                    let difRentDate = differenceInTime / (1000 * 3600 * 24);
-                    let RentPrice = price * difRentDate;
+                let differenceInTime = dropDate - pickDate;
 
 
-                    let res = await axios.post('/rentConfirm', {
-                        car_id: car_id,
-                        start_date: pickUpDate,
-                        end_date: DropDate,
-                        total_price: RentPrice
+                let difRentDate = differenceInTime / (1000 * 3600 * 24);
+                let RentPrice = price * difRentDate;
+
+
+                let res = await axios.post('/rentConfirm', {
+                    car_id: car_id,
+                    start_date: pickUpDate,
+                    end_date: DropDate,
+                    total_price: RentPrice
+                });
+                // console.log(res)
+                if (res.status == 200 && res.data.status === 'success') {
+                    successToast(res.data.message);
+                    let cars = await axios.post('/carById', {
+                        id: car_id
                     });
-                   // console.log(res)
-                    if (res.status == 200 && res.data.status === 'success') {
-                        successToast(res.data.message);
-                        let cars = await axios.post('/carById', {
-                            id: car_id
-                        });
-                       // console.log(cars);
-                        setTimeout(() => {
-                            window.location.href = `/pay/${car_id}`;
-                        }, 1000)
-                    } else {
-                        errorToast("The Car Is Already Reserved ! Please Choice Another Car");
-                        setTimeout(() => {
-                            window.location.href = '/rentals';
-                        }, 1000);
+                    // console.log(cars);
+                    setTimeout(() => {
+                        window.location.href = `/pay/${car_id}`;
+                    }, 1000)
+                } else {
+                    errorToast("The Car Is Already Reserved ! Please Choice Another Car");
+                    setTimeout(() => {
+                        window.location.href = '/rentals';
+                    }, 1000);
 
-                    }
                 }
-            @else
-                window.location.href = 'http://127.0.0.1:8000/login-page';
-            @endif
-
+            }
         }
 
-
+    }
+    async function testProfile() {
+        let res = await axios.get('/testProfile');
+        console.log(res);
+        if (res.data.status === 'NProfile') {
+            errorToast('profile not create');
+            setTimeout(() => {
+                window.location.href = '/Profile_Page';
+            });
+        } else if (res.data.status === 'aseProfile') {
+            errorToast('profile  create');
+        } else {
+            errorToast('profilessssssssssss ');
+        }
+    }
 </script>
 
 <style>

@@ -26,7 +26,7 @@ class JWTToken
         {
 
                 try {
-                        if ($token == null) {
+                        if ($token === null) {
                                 return "unauthorized";
                         } else {
                                 $key = env('JWT_key');

@@ -20,9 +20,12 @@ class AuthMiddleWare
         $token = $request->cookie('token');
         $data = JWTToken::verifyToken($token);
 
-            if ($data == "unauthorized") {
-                return redirect('/login-page');
-            }
+        if ($data === "unauthorized") {
+            return  redirect('login-page');
+        }
+
+
+
             else {
                 $request->headers->set('email', $data->userEmail);
                 $request->headers->set('id', $data->userId);

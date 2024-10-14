@@ -9,6 +9,8 @@
     async function getData() {
             let res = await axios.post('/car-seach-date');
             console.log(res);
+            log
+            
             if (res.status === 200 && res.data.length === 1) {
                 res.data.forEach(item => {
                     let data = `

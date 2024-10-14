@@ -145,6 +145,7 @@ class CarController extends Controller
 
     }
 
+
     public function carIdUpdate(Request $request){
         $car_id =$request->input('id');
         Car::where('id',$car_id)->update([

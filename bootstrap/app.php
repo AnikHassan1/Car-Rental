@@ -14,6 +14,9 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->validateCsrfTokens(except: ['/*']);
        // $middleware->append(AuthMiddleWare::class);
+       $middleware =[
+        'user'=>\App\Http\Middleware\AuthMiddleWare::class,
+       ];
     })
 
     ->withExceptions(function (Exceptions $exceptions) {
